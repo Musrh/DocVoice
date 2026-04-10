@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
-import UploadDoc from '@/components/UploadDoc.vue'
-import Reader from '@/components/Reader.vue'
+import UploadDoc from './components/UploadDoc.vue'
+import Reader from './components/Reader.vue'
 
 // Texte global partagé
 const text = ref('')
