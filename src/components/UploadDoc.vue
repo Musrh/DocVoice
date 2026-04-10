@@ -4,29 +4,60 @@ import Tesseract from 'tesseract.js'
 
 const text = ref('')
 const loading = ref(false)
+const error = ref('')
 
 const handleFile = async (e) => {
   const file = e.target.files[0]
   if (!file) return
 
-  loading.value = true
+  // Reset
+  error.value = ''
+  text.value = ''
 
-  const { data: { text: result } } = await Tesseract.recognize(
-    file,
-    'eng'
-  )
+  // Vérifier type fichier
+  if (!file.type.startsWith('image/')) {
+    error.value = 'Veuillez uploader une image (jpg, png...)'
+    return
+  }
 
-  text.value = result
-  loading.value = false
+  try {
+    loading.value = true
+
+    const { data: { text: result } } = await Tesseract.recognize(
+      file,
+      'eng'
+    )
+
+    text.value = result
+
+  } catch (err) {
+    error.value = 'Erreur lors de la lecture du document'
+    console.error(err)
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 
 <template>
-  <div>
-    <input type="file" @change="handleFile" />
+  <div class="p-4 border rounded-lg">
 
-    <p v-if="loading">Lecture du document...</p>
+    <!-- Upload -->
+    <input type="file" accept="image/*" @change="handleFile" />
 
-    <textarea v-if="text" v-model="text" rows="10" />
+    <!-- Loading -->
+    <p v-if="loading">⏳ Lecture du document...</p>
+
+    <!-- Error -->
+    <p v-if="error" class="text-red-500">{{ error }}</p>
+
+    <!-- Résultat -->
+    <textarea
+      v-if="text"
+      v-model="text"
+      rows="10"
+      class="w-full mt-4 border p-2 rounded"
+    />
+
   </div>
 </template>
