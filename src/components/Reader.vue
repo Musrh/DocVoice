@@ -1,13 +1,25 @@
 <script setup>
-const speak = (text) => {
-  const utterance = new SpeechSynthesisUtterance(text)
+import { defineProps } from 'vue'
+
+const props = defineProps({
+  text: {
+    type: String,
+    default: ''
+  }
+})
+
+const speak = () => {
+  if (!props.text) return
+
+  const utterance = new SpeechSynthesisUtterance(props.text)
   utterance.lang = 'fr-FR'
+
   speechSynthesis.speak(utterance)
 }
 </script>
 
 <template>
-  <button @click="speak(text)">
+  <button @click="speak" :disabled="!text">
     🔊 Lire
   </button>
 </template>
