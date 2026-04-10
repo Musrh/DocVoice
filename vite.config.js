@@ -4,5 +4,12 @@ import vue from '@vitejs/plugin-vue'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
-  base: '/DocVoice/'
+
+  // IMPORTANT pour GitHub Pages
+  base: '/DocVoice/',
+
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true
+  }
 })
