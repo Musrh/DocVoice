@@ -9,7 +9,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(), // ⭐ IMPORTANT
+  history: createWebHashHistory('/DocVoice/'), // ⭐ modification appliquée
   routes
 })
 
