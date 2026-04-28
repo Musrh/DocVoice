@@ -9,7 +9,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory('/DocVoice/'), // ⭐ modification appliquée
+  history: createWebHashHistory(), // ❌ PAS de /DocVoice ici
   routes
 })
 
